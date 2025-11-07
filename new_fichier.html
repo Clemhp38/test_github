@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Époustouflante ⚡</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #000428, #004e92);
+      overflow: hidden;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+    }
+
+    h1 {
+      font-size: 4em;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      background: linear-gradient(90deg, #00ffff, #ff00ff, #ffff00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ffff; }
+      to { text-shadow: 0 0 30px #ff00ff; }
+    }
+
+    .cube {
+      position: relative;
+      width: 150px;
+      transform-style: preserve-3d;
+      transform: rotateX(20deg) rotateY(30deg);
+      animation: spin 8s infinite linear;
+    }
+
+    @keyframes spin {
+      from { transform: rotateX(20deg) rotateY(0deg); }
+      to { transform: rotateX(20deg) rotateY(360deg); }
+    }
+
+    .cube div {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 20px #00ffff;
+    }
+
+    .front  { transform: translateZ(75px); }
+    .back   { transform: rotateY(180deg) translateZ(75px); }
+    .right  { transform: rotateY(90deg) translateZ(75px); }
+    .left   { transform: rotateY(-90deg) translateZ(75px); }
+    .top    { transform: rotateX(90deg) translateZ(75px); }
+    .bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+    #text-dynamique {
+      margin-top: 30px;
+      font-size: 1.5em;
+      height: 40px;
+      overflow: hidden;
+      border-right: 3px solid #fff;
+      white-space: nowrap;
+      animation: cursor 0.7s infinite;
+    }
+
+    @keyframes cursor {
+      0%, 50%, 100% { border-color: transparent; }
+      25%, 75% { border-color: white; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Bienvenue sur la page 🔥</h1>
+  <div class="cube">
+    <div class="front"></div>
+    <div class="back"></div>
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+  </div>
+  <div id="text-dynamique"></div>
+
+  <script>
+    const phrases = [
+      "Bienvenue dans le futur 🚀",
+      "HTML + CSS + JS = Magie ✨",
+      "Crée quelque chose d’incroyable 💡",
+      "Tu es un(e) codeur(se) légendaire 👑"
+    ];
+
+    let i = 0, j = 0, currentPhrase = "", deleting = false;
+    const el = document.getElementById("text-dynamique");
+
+    function typeEffect() {
+      currentPhrase = phrases[i];
+      if (!deleting && j <= currentPhrase.length) {
+        el.textContent = currentPhrase.substring(0, j++);
+      } else if (deleting && j >= 0) {
+        el.textContent = currentPhrase.substring(0, j--);
+      }
+
+      if (j === currentPhrase.length) {
+        deleting = true;
+        setTimeout(typeEffect, 1000);
+      } else if (deleting && j === 0) {
+        deleting = false;
+        i = (i + 1) % phrases.length;
+        setTimeout(typeEffect, 300);
+      } else {
+        setTimeout(typeEffect, deleting ? 50 : 100);
+      }
+    }
+
+    typeEffect();
+  </script>
+</body>
+</html>
